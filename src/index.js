@@ -19,6 +19,9 @@ app.use(cors({
 
 // app.use('/uploads',express.static(__dirname +'\\uploads'))
 
+app.get('/', (req,res)=>{
+    return res.json({message:"App is Running"})
+})
 app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
