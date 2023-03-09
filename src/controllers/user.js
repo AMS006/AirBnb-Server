@@ -61,6 +61,7 @@ exports.logout = async(req,res) =>{
 exports.getProfile = async(req,res) =>{
     try {
         const {userToken} = req.cookies
+        console.log(userToken)
         if(!userToken)
             return res.json(null)
         const userData = await jwt.verify(userToken,process.env.SECRET_KEY);

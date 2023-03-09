@@ -1,7 +1,7 @@
 const express = require('express')
 const multer = require('multer');
 const router = express.Router()
-const { addImagesViaLink, uploadImage, addNewPlaces, getUserPlaces, getPlaceById, updatePlace, getAllPlaces } = require('../controllers/places')
+const { uploadImage, addNewPlaces, getUserPlaces, getPlaceById, updatePlace, getAllPlaces } = require('../controllers/places')
 
 const storage = multer.diskStorage({
     destination: "./src/uploads",
