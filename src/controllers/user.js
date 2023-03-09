@@ -52,9 +52,10 @@ exports.loginUser = async(req,res) =>{
 }
 exports.logout = async(req,res) =>{
     try {
-
         return res.status(200).cookie('userToken',null,{
             expires: new Date(Date.now()),
+            secure:false,
+            httpOnly:false
         }).json({message:"Logout Successfull"})
     } catch (error) {
         return res.status(500).json({message:error.message})
