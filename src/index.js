@@ -25,9 +25,12 @@ app.get('/', (req,res)=>{
 app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
-app.listen(4000,()=>{
+app.listen(4000,async ()=>{
     console.log('Server is Running on Port 4000')
-    mongoose.connect(process.env.MONGO_URI).then(()=>{
+    mongoose.connect(process.env.MONGO_URI,{
+        useNewUrlParser:true,
+        useUnifiedTopology:true
+    }).then(()=>{
         console.log("DataBase Connected")
     }).catch((err) =>{
         console.log("DataBase Connection Failed" + err);
