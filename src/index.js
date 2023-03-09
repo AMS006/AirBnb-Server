@@ -13,7 +13,7 @@ dotenv.config();
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:'http://localhost:3000',
+    origin:'https://air-bnb-client.vercel.app',
     credentials:true
 }))
 
@@ -25,7 +25,7 @@ app.get('/', (req,res)=>{
 app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
-app.listen(4000,async ()=>{
+app.listen(4000, ()=>{
     console.log('Server is Running on Port 4000')
     mongoose.connect(process.env.MONGO_URI,{
         useNewUrlParser:true,
