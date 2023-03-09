@@ -14,8 +14,6 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     origin:'https://air-bnb-client.vercel.app',
-    methods:["GET","POST","PUT"],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'], 
     credentials:true
 }))
 

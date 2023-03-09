@@ -40,7 +40,9 @@ exports.loginUser = async(req,res) =>{
             expires : new Date(
                 Date.now() + 5 * 24 * 60 * 60 * 1000
             ),
-            secure:false,
+            secure:true,
+            maxAge:3600000*5,
+            sameSite:'none',
             httpOnly:true
         }
         return res.status(200).cookie('userToken',token,options).json({user});
