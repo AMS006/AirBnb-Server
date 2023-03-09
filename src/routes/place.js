@@ -1,11 +1,17 @@
 const express = require('express')
 const multer = require('multer');
+const router = express.Router()
 const { addImagesViaLink, uploadImage, addNewPlaces, getUserPlaces, getPlaceById, updatePlace, getAllPlaces } = require('../controllers/places')
 
-const router = express.Router()
-const upload = multer({dest:'uploads/'})
+const storage = multer.diskStorage({
+    destination: "./src/uploads",
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + "-" + file.originalname);
+    },
+  });
+const upload = multer({storage});
 
-router.post('/addImage',addImagesViaLink)
+// router.post('/addImage',addImagesViaLink)
 
 router.post('/upload',upload.array('files',20),uploadImage)
 

@@ -1,7 +1,8 @@
 const placeModel = require('../models/places')
-const download = require('image-downloader');
-const fse = require('fs-extra')
+
 const jwt = require('jsonwebtoken')
+const uploads = require('../utils/uploads')
+
 exports.addNewPlaces = async(req,res) =>{
     const {userToken} = req.cookies
     if(!userToken){
@@ -84,32 +85,31 @@ exports.updatePlace = async(req,res) =>{
         return res.status(500).json({message:error.message})
     }
 }
-exports.addImagesViaLink = async(req,res) =>{
-    try {
-        const {link} = req.body;
-        const name = 'photo' + Date.now() + '.jpg'
-        let destination = __dirname
-        destination = destination.replace('controllers','');
-        const options = {
-            url: link,
-            dest: destination + 'uploads/' + name
-        }
-        await download.image(options)
-        res.json({name})
-    } catch (error) {
-        return res.status(500).json({message:error.message})
-    }
-}
+// exports.addImagesViaLink = async(req,res) =>{
+//     try {
+//         const {link} = req.body;
+//         const name = 'photo' + Date.now() + '.jpg'
+//         let destination = __dirname
+//         destination = destination.replace('controllers','');
+//         const options = {
+//             url: link,
+//             dest: destination + 'uploads/' + name
+//         }
+//         await download.image(options)
+//         res.json({name})
+//     } catch (error) {
+//         return res.status(500).json({message:error.message})
+//     }
+// }
 exports.uploadImage = async(req,res) =>{
     try {
         const uploadedImages = []
+
         for(let i = 0;i<req.files.length;i++){
-            const {path,originalname} = req.files[i];
-            const words = originalname.split('.');
-            const extension = words[words.length -1]
-            const newPath = path + '.' + extension
-            fse.renameSync(path,newPath)
-            uploadedImages.push(newPath.replace('uploads\\' ,''))
+            const location = req.files[i].path;
+            const result = await uploads(location);
+
+            uploadedImages.push(result.url)
         }
         return res.json({images:uploadedImages})
     } catch (error) {

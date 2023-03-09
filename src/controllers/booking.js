@@ -9,9 +9,9 @@ exports.addBooking = async(req,res) =>{
             return res.json(null)
         const {_id} = await jwt.verify(userToken,process.env.SECRET_KEY);
         const data = {checkIn,checkOut,name,phone,price,place,user:_id}
-        console.log(data);
+
         const booking = await bookingModel.create(data)
-        console.log(booking)
+
         return res.status(200).json({booking});
     } catch (error) {
         return res.status(500).json({message:error.massage})
