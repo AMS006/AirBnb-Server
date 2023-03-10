@@ -102,16 +102,15 @@ exports.updatePlace = async(req,res) =>{
 // }
 exports.uploadImage = async(req,res) =>{
     try {
-        const uploadedImages = []
-
+        const uploadedImages = []  
+        console.log(req.files);  
         for(let i = 0;i<req.files.length;i++){
             const location = req.files[i].path;
             const result = await uploads(location);
-
             uploadedImages.push(result.url)
         }
         return res.json({images:uploadedImages})
-    } catch (error) {
+    } catch(error) {
         return res.status(500).json({message:error.message})
     }
 }

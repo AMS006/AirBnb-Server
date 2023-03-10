@@ -7,10 +7,9 @@ cloudinary.config({
     api_key:process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
-
 const uploads = (file) =>{
     return new Promise((resolve) =>{
-        cloudinary.uploader.upload(
+        cloudinary.v2.uploader.upload(
             file,
             (result) =>{
                 resolve({url:result.url, id:result.public_id})
@@ -20,5 +19,4 @@ const uploads = (file) =>{
         )
     })
 }
-
 module.exports = uploads

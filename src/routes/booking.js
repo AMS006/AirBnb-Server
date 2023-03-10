@@ -5,6 +5,6 @@ const router = express.Router()
 
 router.post('/',addBooking)
 
-router.get('/',getUserBookings);
+router.get('/',getUserBookings)
 
 module.exports = router
