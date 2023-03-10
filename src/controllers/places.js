@@ -50,7 +50,6 @@ exports.getAllPlaces = async(req,res) =>{
 exports.getPlaceById = async(req,res) =>{
     try {
         const {id} = req.params
-        const {title,address,images,price,perks,checkIn,checkOut,maxGuests,description} = req.body
         if(!id)
             return res.status(400).json({message:"Bad Request"})
 

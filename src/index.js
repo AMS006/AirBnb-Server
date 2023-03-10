@@ -14,6 +14,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     origin:'https://air-bnb-client.vercel.app',
+    method:["GET","POST","PUT"],
     credentials:true
 }))
 
@@ -25,6 +26,7 @@ app.get('/', (req,res)=>{
 app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
+
 app.listen(4000, ()=>{
     console.log('Server is Running on Port 4000')
     mongoose.connect(process.env.MONGO_URI,{
@@ -33,6 +35,6 @@ app.listen(4000, ()=>{
     }).then(()=>{
         console.log("DataBase Connected")
     }).catch((err) =>{
-        console.log("DataBase Connection Failed" + err);
+        console.log("DataBase Connection Failed" + err)
     })
 })
