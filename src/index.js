@@ -13,8 +13,8 @@ dotenv.config();
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:'https://air-bnb-client.vercel.app/',
-    methods:["GET","POST","PUT"],
+    origin:'https://air-bnb-client.vercel.app',
+    method:["GET","POST","PUT"],
     credentials:true
 }))
 
