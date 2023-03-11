@@ -4,13 +4,12 @@ const cloudinary = require('cloudinary')
 dotenv.config()
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key:process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure:true
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 })
 const uploads = (file) =>{
     return new Promise((resolve) =>{
-        cloudinary.v2.uploader.upload(
+        cloudinary.uploader.upload(
             file,
             (result) =>{
                 resolve({url:result.url, id:result.public_id})
@@ -18,11 +17,13 @@ const uploads = (file) =>{
             {folder:"AirBnbClone"},
             {resource_type:'auto'}
         )
+    },(reject)=>{
+        console.log(reject);
     })
 }
-// const uploads = (file) =>{
-//     cloudinary.v2.uploader.upload(file).then((result) =>{
-//         return result.url
-//     })
+// const uploads = async(file) =>{
+//     console.log(file)
+//     const result = await cloudinary.uploader.upload(file)
+//     // console.log(result);
 // }
 module.exports = uploads

@@ -84,26 +84,9 @@ exports.updatePlace = async(req,res) =>{
         return res.status(500).json({message:error.message})
     }
 }
-// exports.addImagesViaLink = async(req,res) =>{
-//     try {
-//         const {link} = req.body;
-//         const name = 'photo' + Date.now() + '.jpg'
-//         let destination = __dirname
-//         destination = destination.replace('controllers','');
-//         const options = {
-//             url: link,
-//             dest: destination + 'uploads/' + name
-//         }
-//         await download.image(options)
-//         res.json({name})
-//     } catch (error) {
-//         return res.status(500).json({message:error.message})
-//     }
-// }
 exports.uploadImage = async(req,res) =>{
     try {
-        const uploadedImages = []  
-        console.log(req.files);  
+        const uploadedImages = []
         for(let i = 0;i<req.files.length;i++){
             const location = req.files[i].path;
             const result = await uploads(location);
