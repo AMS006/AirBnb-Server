@@ -15,8 +15,7 @@ app.use(cookieParser())
 app.use(cors({
     origin:'*',
     methods:["GET","POST","PUT"],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
-    credentials:true
+    credentials:true,
 }))
 
 // app.use('/uploads',express.static(__dirname +'\\uploads'))
