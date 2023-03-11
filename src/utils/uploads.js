@@ -5,7 +5,8 @@ dotenv.config()
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key:process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure:true
 })
 const uploads = (file) =>{
     return new Promise((resolve) =>{
@@ -19,4 +20,9 @@ const uploads = (file) =>{
         )
     })
 }
+// const uploads = (file) =>{
+//     cloudinary.v2.uploader.upload(file).then((result) =>{
+//         return result.url
+//     })
+// }
 module.exports = uploads
