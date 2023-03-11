@@ -13,9 +13,9 @@ dotenv.config();
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:'*',
+    origin:'https://air-bnb-client.vercel.app/',
     methods:["GET","POST","PUT"],
-    credentials:true,
+    credentials:true
 }))
 
 // app.use('/uploads',express.static(__dirname +'\\uploads'))
