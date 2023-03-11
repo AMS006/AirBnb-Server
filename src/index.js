@@ -13,7 +13,7 @@ dotenv.config();
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:'https://shy-lime-bull-tux.cyclic.app',
+    origin:'*',
     methods:["GET","POST","PUT"],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
     credentials:true
