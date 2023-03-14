@@ -6,18 +6,18 @@ const mongoose = require('mongoose')
 const user = require('./routes/user')
 const place = require('./routes/place')
 const booking = require('./routes/booking')
+
 const app = express()
 
 dotenv.config();
 
 app.use(express.json())
 app.use(cookieParser())
+
 app.use(cors({
-    origin:'https://air-bnb-client.vercel.app',
-    method:["GET","POST","PUT"],
+    origin:['http://localhost:3000','https://air-bnb-client.vercel.app/'],
     credentials:true
 }))
-
 // app.use('/uploads',express.static(__dirname +'\\uploads'))
 
 app.get('/', (req,res)=>{
