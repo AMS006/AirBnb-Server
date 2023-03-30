@@ -1,5 +1,6 @@
 const dotenv = require('dotenv')
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary').v2
+const streamifier = require('streamifier')
 
 dotenv.config()
 cloudinary.config({
@@ -7,23 +8,20 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
-const uploads = (file) =>{
-    return new Promise((resolve) =>{
-        cloudinary.uploader.upload(
-            file,
-            (result) =>{
-                resolve({url:result.url, id:result.public_id})
-            },
-            {folder:"AirBnbClone"},
-            {resource_type:'auto'}
-        )
-    },(reject)=>{
-        console.log(reject);
-    })
+const uploads = (buffer) =>{
+    return new Promise((resolve, reject) => {
+        let stream = cloudinary.uploader.upload_stream(
+          (error, result) => {
+            console.log(result)
+            if (result) {
+              resolve(result);
+            } else {
+              reject(error);
+            }
+          }
+        );
+      streamifier.createReadStream(buffer).pipe(stream);
+    });
 }
-// const uploads = async(file) =>{
-//     console.log(file)
-//     const result = await cloudinary.uploader.upload(file)
-//     // console.log(result);
-// }
+
 module.exports = uploads

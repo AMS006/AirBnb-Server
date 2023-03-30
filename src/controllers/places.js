@@ -9,7 +9,6 @@ exports.addNewPlaces = async(req,res) =>{
         return res.status(400).json({message:"Invalid Request"})
     }
     const userData = await jwt.verify(userToken,process.env.SECRET_KEY);
-    // const user = await userModel.findById(userData._id);
     const {title,address,images,price,perks,checkIn,checkOut,maxGuests,description} = req.body
     const data = {
         owner:userData._id,
@@ -87,10 +86,10 @@ exports.updatePlace = async(req,res) =>{
 exports.uploadImage = async(req,res) =>{
     try {
         const uploadedImages = []
+        console.log(req.files)
         for(let i = 0;i<req.files.length;i++){
-            const location = req.files[i].path;
-            const result = await uploads(location);
-            uploadedImages.push(result.url)
+            const img = await uploads(req.files[i].buffer)
+            uploadedImages.push(img.url)
         }
         return res.json({images:uploadedImages})
     } catch(error) {

@@ -15,14 +15,16 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin:['http://localhost:3000','https://air-bnb-client.vercel.app/'],
+    origin:['https://air-bnb-client.vercel.app/','http://localhost:3000'],
+    methods: ['GET', 'PUT', 'POST','DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
     credentials:true
 }))
-// app.use('/uploads',express.static(__dirname +'\\uploads'))
 
 app.get('/', (req,res)=>{
     return res.json({message:"App is Running"})
 })
+
 app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
