@@ -18,8 +18,7 @@ const uploads = (buffer) =>{
             } else {
               reject(error);
             }
-          },
-          {folder:"AirBnbClone"}
+          }
         );
       streamifier.createReadStream(buffer).pipe(stream);
     });
