@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const generateToken = (_id) =>{
-    const token =  jwt.sign({_id},process.env.SECRET_KEY,{expiresIn:'3d'})
+    const token =  jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:"30d"})
 
     return token;
 }
@@ -30,46 +30,29 @@ exports.loginUser = async(req,res) =>{
         const user = await userModel.findOne({email});
 
         if(!user)
-            return res.status(400).json({message:"Invalid Credentials"})
+            return res.status(400).json({message:"User Already Exists"})
         
         const isPasswordMatch = await bcrypt.compareSync(password,user.password);
         if(!isPasswordMatch)
             return res.status(400).json({message:"Invalid Credentials"})
+
         const token = generateToken(user._id);
-        const options = {
-            expires : new Date(
-                Date.now() + 5 * 24 * 60 * 60 * 1000
-            ),
-            secure:true,
-            maxAge:3600000*5,
-            sameSite:'none',
-            httpOnly:true
-        }
-        return res.status(200).cookie('userToken',token,options).json({user});
+        
+        return res.status(200).json({
+            _id:user._id,
+            name:user.name,
+            email:user.email,
+            token:token
+        });
     } catch (error) {
         return res.status(500).json({message:error.message})
     }
 }
-exports.logout = async(req,res) =>{
-    try {
-        return res.status(200).cookie('userToken',null,{
-            expires: new Date(Date.now()),
-            secure:false,
-            httpOnly:false
-        }).json({message:"Logout Successfull"})
-    } catch (error) {
-        return res.status(500).json({message:error.message})
-    }
-}
+
 exports.getProfile = async(req,res) =>{
     try {
-        const {userToken} = req.cookies
-        if(!userToken)
-            return res.json(null)
-        const userData = await jwt.verify(userToken,process.env.SECRET_KEY);
-        const user = await userModel.findById(userData._id);
         
-        return res.status(200).json({user});
+        return res.status(200).json({user:req.user});
         
     } catch (error) {
         return res.status(500).json({message:error.message})

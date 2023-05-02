@@ -4,14 +4,10 @@ const jwt = require('jsonwebtoken')
 const uploads = require('../utils/uploads')
 
 exports.addNewPlaces = async(req,res) =>{
-    const {userToken} = req.cookies
-    if(!userToken){
-        return res.status(400).json({message:"Invalid Request"})
-    }
-    const userData = await jwt.verify(userToken,process.env.SECRET_KEY);
+    const _id = req.user._id
     const {title,address,images,price,perks,checkIn,checkOut,maxGuests,description} = req.body
     const data = {
-        owner:userData._id,
+        owner:_id,
         title,address,images,price,perks,checkIn,checkOut,maxGuests,description
     }
     const place = await placeModel.create(data);
@@ -20,12 +16,7 @@ exports.addNewPlaces = async(req,res) =>{
 }
 exports.getUserPlaces = async(req,res) =>{
     try {
-        const {userToken} = req.cookies
-        if(!userToken){
-            return res.status(400).json({message:"Invalid Request"})
-        }
-        const userData = await jwt.verify(userToken,process.env.SECRET_KEY);
-        const {_id} = userData;
+        const _id = req.user._id
         const places = await placeModel.find({owner:_id});
         if(!places)
             res.json({message:"No places Found"})
@@ -61,13 +52,10 @@ exports.getPlaceById = async(req,res) =>{
 }
 exports.updatePlace = async(req,res) =>{
     try {
-        const {userToken} = req.cookies
+        
         const {id} = req.params
         const {title,address,images,price,perks,checkIn,checkOut,maxGuests,description} = req.body
-        if(!userToken){
-            return res.status(400).json({message:"Invalid Request"})
-        }
-        const {_id} = await jwt.verify(userToken,process.env.SECRET_KEY);
+        const _id = req.user._id
         const place = await placeModel.findById(id)
         if(!place)
             return res.status(400).json({message:"Invalid request"})

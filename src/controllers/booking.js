@@ -4,10 +4,8 @@ const jwt = require('jsonwebtoken')
 exports.addBooking = async(req,res) =>{
     try {
         const {checkIn,checkOut,name,phone,price,place} = req.body
-        const {userToken} = req.cookies
-        if(!userToken)
-            return res.json(null)
-        const {_id} = await jwt.verify(userToken,process.env.SECRET_KEY);
+        
+        const _id = req.user._id
         const data = {checkIn,checkOut,name,phone,price,place,user:_id}
 
         const booking = await bookingModel.create(data)
@@ -19,10 +17,8 @@ exports.addBooking = async(req,res) =>{
 }
 exports.getUserBookings = async(req,res) =>{
     try {
-        const {userToken} = req.cookies
-        if(!userToken)
-            return res.json(null)
-        const {_id} = await jwt.verify(userToken,process.env.SECRET_KEY);
+        
+        const _id = req.user._id
         const bookings = await bookingModel.find({user:_id}).populate('place')
         if(bookings.length <= 0)
            return res.status(404).json({message:"No Booking Found"})
