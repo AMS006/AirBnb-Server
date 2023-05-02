@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGO_URI,{
 app.get('/', (req,res)=>{
     return res.json({message:"App is Running"})
 })
-
+app.use(express.static(path.join(__dirname, '../client/build')))
 app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
