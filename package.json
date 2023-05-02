@@ -17,6 +17,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "fs-extra": "^11.1.0",
+    "helmet": "^6.1.5",
+    "http": "^0.0.1-security",
     "image-downloader": "^4.3.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.0",
