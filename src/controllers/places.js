@@ -30,7 +30,7 @@ exports.getAllPlaces = async(req,res) =>{
         const places = await placeModel.find();
 
         if(!places)
-            return res.status(404).json({message:"No restaurant found"})
+            return res.status(404).json({message:"No Places found"})
         
         return res.status(200).json({places});
     } catch (error) {
@@ -54,12 +54,14 @@ exports.updatePlace = async(req,res) =>{
     try {
         
         const {id} = req.params
+        console.log(id)
         const {title,address,images,price,perks,checkIn,checkOut,maxGuests,description} = req.body
         const _id = req.user._id
         const place = await placeModel.findById(id)
         if(!place)
             return res.status(400).json({message:"Invalid request"})
-        if(_id === place.owner.toString()){
+
+        if(_id.toString() === place.owner.toString()){
             place.set({
                 title,address,images,price,perks,checkIn,checkOut,maxGuests,description
             })

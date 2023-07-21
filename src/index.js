@@ -20,10 +20,12 @@ app.use(helmet())
 const server = http.createServer(app);
 
 app.use(cors({
-    origin:['https://air-bnb-client.vercel.app/','http://localhost:3000'],
+    origin: 'https://air-bnb-client.vercel.app/', 
     methods: ['GET', 'PUT', 'POST','DELETE'], 
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
-    credentials:true
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'], 
+    credentials: true,
+    maxAge: 5000,
+    exposedHeaders: ['*', 'Authorization' ]
 }))
 mongoose.connect(process.env.MONGO_URI,{
     useNewUrlParser:true,

@@ -17,6 +17,6 @@ router.get('/getPlace/:id',getPlaceById);
 
 router.get('/',getAllPlaces);
 
-router.put('/:id',updatePlace)
+router.put('/:id',isAuthorized,updatePlace)
 
 module.exports = router;
