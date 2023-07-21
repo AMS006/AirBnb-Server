@@ -6,16 +6,12 @@ const mongoose = require('mongoose')
 const user = require('./routes/user')
 const place = require('./routes/place')
 const booking = require('./routes/booking')
-const helmet = require("helmet");
 
 const app = express()
 env.config();
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(helmet())
-
-
 
 app.use(cors({
     origin: 'https://air-bnb-client.vercel.app/', 
