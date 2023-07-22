@@ -1,7 +1,7 @@
 const express = require('express')
 const multer = require('multer');
 const router = express.Router()
-const { uploadImage, addNewPlaces, getUserPlaces, getPlaceById, updatePlace, getAllPlaces } = require('../controllers/places');
+const { uploadImage, addNewPlaces, getUserPlaces, getPlaceById, updatePlace, getAllPlaces, deletePlace } = require('../controllers/places');
 const isAuthorized = require('../middleware/authorization');
 
 const storage = multer.memoryStorage()
@@ -18,5 +18,7 @@ router.get('/getPlace/:id',getPlaceById);
 router.get('/',getAllPlaces);
 
 router.put('/:id',isAuthorized,updatePlace)
+
+router.delete('/:id',isAuthorized,deletePlace)
 
 module.exports = router;

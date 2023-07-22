@@ -1,6 +1,4 @@
 const placeModel = require('../models/places')
-
-const jwt = require('jsonwebtoken')
 const uploads = require('../utils/uploads')
 
 exports.addNewPlaces = async(req,res) =>{
@@ -54,7 +52,6 @@ exports.updatePlace = async(req,res) =>{
     try {
         
         const {id} = req.params
-        console.log(id)
         const {title,address,images,price,perks,checkIn,checkOut,maxGuests,description} = req.body
         const _id = req.user._id
         const place = await placeModel.findById(id)
@@ -76,13 +73,21 @@ exports.updatePlace = async(req,res) =>{
 exports.uploadImage = async(req,res) =>{
     try {
         const uploadedImages = []
-        console.log(req.files)
         for(let i = 0;i<req.files.length;i++){
             const img = await uploads(req.files[i].buffer)
             uploadedImages.push(img.url)
         }
         return res.json({images:uploadedImages})
     } catch(error) {
+        return res.status(500).json({message:error.message})
+    }
+}
+exports.deletePlace = async(req,res) =>{
+    try {
+        const id = req.params.id;
+        const data = await placeModel.findByIdAndDelete(id)
+        return res.status(200).json({message:"Accomodation Deleted"})
+    } catch (error) {
         return res.status(500).json({message:error.message})
     }
 }

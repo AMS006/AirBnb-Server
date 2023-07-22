@@ -1,5 +1,4 @@
 const bookingModel = require('../models/booking');
-const jwt = require('jsonwebtoken')
 
 exports.addBooking = async(req,res) =>{
     try {
@@ -17,7 +16,6 @@ exports.addBooking = async(req,res) =>{
 }
 exports.getUserBookings = async(req,res) =>{
     try {
-        
         const _id = req.user._id
         const bookings = await bookingModel.find({user:_id}).populate('place')
         if(bookings.length <= 0)

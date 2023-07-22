@@ -12,7 +12,6 @@ const uploads = (buffer) =>{
     return new Promise((resolve, reject) => {
         let stream = cloudinary.uploader.upload_stream(
           (error, result) => {
-            console.log(result)
             if (result) {
               resolve(result);
             } else {
