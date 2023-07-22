@@ -32,6 +32,7 @@ app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
 
+
 app.listen(4000, ()=>{
     console.log('Server is Running on Port 4000')
 })
