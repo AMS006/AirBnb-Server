@@ -13,7 +13,7 @@ exports.addBooking = async(req,res) =>{
 
         if(booking){
             await placeModel.findByIdAndUpdate(place,{status:"Booked"})
-            const date = new Date(checkOut);
+            const date = new Date(checkIn + ' 23:59:59');
             schedule.scheduleJob(date,async()=>{
                 await placeModel.findByIdAndUpdate(place,{status:"Not Booked"})
             })

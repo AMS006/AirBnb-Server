@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const user = require('./routes/user')
 const place = require('./routes/place')
 const booking = require('./routes/booking')
+const nodeSchedule = require('node-schedule')
 
 const app = express()
 env.config();
@@ -14,7 +15,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: ['https://air-bnb-client.vercel.app','http://localhost:3000'], 
+    origin: ['https://air-bnb-client.vercel.app','http://localhost:3000'],
     methods: ['GET', 'PUT', 'POST','DELETE'], 
     allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'], 
     credentials: true
@@ -31,7 +32,6 @@ app.get('/', (req,res)=>{
 app.use('/api/v1/user',user)
 app.use('/api/v1/place',place)
 app.use('/api/v1/booking',booking)
-
 
 app.listen(4000, ()=>{
     console.log('Server is Running on Port 4000')
